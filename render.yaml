@@ -1,0 +1,53 @@
+# Render configuration for full-stack deployment
+
+services:
+  # Frontend - Next.js
+  - type: web
+    name: nexus-stack-frontend
+    env: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: nexus-stack-backend
+          type: web
+          property: url
+        value: /api
+      - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+        value: pk_test_your-stripe-publishable-key
+
+  # Backend - Express.js
+  - type: web
+    name: nexus-stack-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromDatabase:
+          name: nexus-stack-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: STRIPE_SECRET_KEY
+        value: sk_test_your-stripe-secret-key
+      - key: EMAIL_USER
+        value: your-email@gmail.com
+      - key: EMAIL_PASSWORD
+        value: your-app-password
+
+# MongoDB Database
+databases:
+  - name: nexus-stack-db
+    plan: free
+    databaseName: nexus-stack
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
