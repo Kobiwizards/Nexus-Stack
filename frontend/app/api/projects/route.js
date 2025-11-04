@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { projects } from '@/data/projectsData';
 
+export const dynamic = 'force-dynamic'; // Add this line
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
