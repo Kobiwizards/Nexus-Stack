@@ -1,102 +1,95 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { useModal } from '@/contexts/ModalContext'
 import { Button } from '@/components/ui/Button'
-import { heroSlides } from '@/data/heroData'
 
 export const HeroSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const { openModal } = useModal()
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const currentHero = heroSlides[currentSlide]
-
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-purple-900/20">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent"></div>
+      {/* Sophisticated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-800">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary-900/10 via-transparent to-transparent"></div>
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-blue-400 rounded-full opacity-70 animate-pulse"></div>
-      <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-purple-400 rounded-full opacity-50 animate-bounce"></div>
-      <div className="absolute bottom-1/4 left-1/3 w-8 h-8 bg-cyan-400 rounded-full opacity-30 animate-ping"></div>
+      {/* Subtle Grid Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]"></div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        {/* Slide Content */}
-        <div key={currentSlide} className="animate-fadeIn">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-              {currentHero.title.split(' ').slice(0, -2).join(' ')}
-            </span>
-            <br />
-            <span className="text-white">
-              {currentHero.title.split(' ').slice(-2).join(' ')}
-            </span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            {currentHero.description}
-          </p>
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-900/20 border border-primary-800/30 text-primary-300 text-sm font-medium mb-8">
+          <span className="w-1.5 h-1.5 bg-accent-cyan rounded-full"></span>
+          Trusted by industry leaders worldwide
+        </div>
 
-          {/* Features List */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {currentHero.features.map((feature, index) => (
-              <div 
-                key={index}
-                className="glass-morphism px-4 py-2 rounded-full text-sm font-medium text-white border border-gray-600 hover:border-blue-500 transition-colors"
-              >
-                {feature}
+        {/* Main Heading */}
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <span className="text-white">Enterprise </span>
+          <span className="bg-gradient-to-r from-white to-dark-300 bg-clip-text text-transparent">
+            Software
+          </span>
+          <br />
+          <span className="text-white">for Modern </span>
+          <span className="bg-gradient-to-r from-accent-blue-light to-accent-cyan bg-clip-text text-transparent">
+            Business
+          </span>
+        </h1>
+        
+        {/* Subtitle */}
+        <p className="text-lg md:text-xl text-dark-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          We deliver scalable, secure, and innovative digital solutions that drive measurable 
+          business outcomes for forward-thinking organizations.
+        </p>
+
+        {/* Feature Pills */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          {["Scalable Architecture", "Enterprise Security", "24/7 Support", "AI-Powered"].map((feature, index) => (
+            <div 
+              key={index}
+              className="glass-morphism px-4 py-2 rounded-full text-sm font-medium text-dark-200 border border-dark-600 hover:border-primary-500 transition-all duration-300"
+            >
+              {feature}
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <Button 
+            variant="primary"
+            size="lg"
+          >
+            Start Your Project
+          </Button>
+          <Button 
+            variant="outline"
+            size="lg"
+          >
+            <span className="flex items-center gap-2">
+              View Our Work
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
+          </Button>
+        </div>
+
+        {/* Trust Indicators */}
+        <div className="mt-12 pt-8 border-t border-dark-700">
+          <p className="text-dark-400 text-sm mb-4">Trusted by innovative teams at</p>
+          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            {["TechCorp", "InnovateLabs", "GlobalSys", "DataFlow", "CloudNet"].map((company) => (
+              <div key={company} className="text-dark-300 font-medium text-sm">
+                {company}
               </div>
             ))}
           </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              onClick={() => openModal('project')}
-              variant="primary"
-              size="lg"
-            >
-              {currentHero.cta}
-            </Button>
-            <Button 
-              onClick={() => openModal('consultation')}
-              variant="outline"
-              size="lg"
-            >
-              Schedule Consultation
-            </Button>
-          </div>
-        </div>
-
-        {/* Slide Indicators */}
-        <div className="flex justify-center space-x-2 mt-12">
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentSlide 
-                  ? 'bg-blue-500 w-8' 
-                  : 'bg-gray-600 hover:bg-gray-500'
-              }`}
-            />
-          ))}
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-gray-400 rounded-full mt-2"></div>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="animate-bounce">
+          <div className="w-6 h-10 border-2 border-dark-400 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-dark-400 rounded-full mt-2"></div>
+          </div>
         </div>
       </div>
     </section>

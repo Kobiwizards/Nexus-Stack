@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { services } from '@/data/servicesData'
 
 export const ProjectFormModal = () => {
-  const { closeModal } = useModal()
+  const { isModalOpen, closeModal } = useModal()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,7 +19,7 @@ export const ProjectFormModal = () => {
 
   const projectTypes = [
     'Web Application',
-    'Mobile Application',
+    'Mobile Application', 
     'E-commerce Platform',
     'SaaS Product',
     'API Development',
@@ -31,7 +31,7 @@ export const ProjectFormModal = () => {
 
   const budgetRanges = [
     '$1k - $5k',
-    '$5k - $10k',
+    '$5k - $10k', 
     '$10k - $25k',
     '$25k - $50k',
     '$50k+'
@@ -54,13 +54,13 @@ export const ProjectFormModal = () => {
   }
 
   return (
-    <Modal>
+    <Modal isOpen={isModalOpen} onClose={closeModal}>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-white">Start Your Project</h2>
           <button
             onClick={closeModal}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-dark-300 hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700/50"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -71,7 +71,7 @@ export const ProjectFormModal = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-dark-300 mb-2">
                 Full Name *
               </label>
               <input
@@ -79,20 +79,20 @@ export const ProjectFormModal = () => {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full px-3 py-2 bg-slate-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-dark-300 mb-2">
                 Company
               </label>
               <input
                 type="text"
                 value={formData.company}
                 onChange={(e) => setFormData({...formData, company: e.target.value})}
-                className="w-full px-3 py-2 bg-slate-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue"
                 placeholder="Your Company"
               />
             </div>
@@ -100,7 +100,7 @@ export const ProjectFormModal = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-dark-300 mb-2">
                 Email Address *
               </label>
               <input
@@ -108,19 +108,19 @@ export const ProjectFormModal = () => {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full px-3 py-2 bg-slate-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue"
                 placeholder="john@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-dark-300 mb-2">
                 Project Budget
               </label>
               <select
                 value={formData.budget}
                 onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                className="w-full px-3 py-2 bg-slate-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 bg-dark-700 border border-dark-600 rounded-lg text-white focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue"
               >
                 <option value="">Select budget range</option>
                 {budgetRanges.map(range => (
@@ -131,13 +131,13 @@ export const ProjectFormModal = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-dark-300 mb-2">
               Interested Service
             </label>
             <select
               value={formData.service}
               onChange={(e) => setFormData({...formData, service: e.target.value})}
-              className="w-full px-3 py-2 bg-slate-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+              className="w-full px-3 py-2 bg-dark-700 border border-dark-600 rounded-lg text-white focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue"
             >
               <option value="">Select a service</option>
               {services.map(service => (
@@ -147,7 +147,7 @@ export const ProjectFormModal = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-dark-300 mb-2">
               Project Type (Select all that apply)
             </label>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -157,16 +157,16 @@ export const ProjectFormModal = () => {
                     type="checkbox"
                     checked={formData.projectType.includes(type)}
                     onChange={() => handleProjectTypeChange(type)}
-                    className="rounded bg-slate-800 border-gray-600 text-blue-500 focus:ring-blue-500"
+                    className="rounded bg-dark-700 border-dark-600 text-accent-blue focus:ring-accent-blue"
                   />
-                  <span className="text-sm text-gray-300">{type}</span>
+                  <span className="text-sm text-dark-300">{type}</span>
                 </label>
               ))}
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-dark-300 mb-2">
               Project Details *
             </label>
             <textarea
@@ -174,7 +174,7 @@ export const ProjectFormModal = () => {
               rows={4}
               value={formData.details}
               onChange={(e) => setFormData({...formData, details: e.target.value})}
-              className="w-full px-3 py-2 bg-slate-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+              className="w-full px-3 py-2 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue"
               placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
             />
           </div>

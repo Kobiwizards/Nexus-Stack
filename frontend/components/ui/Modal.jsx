@@ -1,32 +1,33 @@
 'use client'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { useModal } from '@/contexts/ModalContext'
 
-export const Modal = ({ children }) => {
-  const { isModalOpen, closeModal } = useModal()
-
+export const Modal = ({ children, isOpen, onClose }) => {
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape') closeModal()
+      if (e.key === 'Escape') onClose()
     }
 
-    if (isModalOpen) {
+    if (isOpen) {
       document.addEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'hidden'
     }
 
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [isModalOpen, closeModal])
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen, onClose])
 
-  if (!isModalOpen) return null
+  if (!isOpen) return null
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={closeModal}
+        onClick={onClose}
       />
-      <div className="relative glass-morphism rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative glass-morphism-dark rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-dark-600">
         {children}
       </div>
     </div>,

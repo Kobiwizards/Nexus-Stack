@@ -19,25 +19,25 @@ export const FeaturedProjects = () => {
     }
   }
 
-  const featuredProjects = projects.slice(0, 4)
+  const featuredProjects = projects.filter(project => project.featured)
 
   return (
     <section className="py-20 px-4 relative">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-800 to-slate-900"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-800 to-dark-900"></div>
       
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               <span className="text-white">Featured </span>
-              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-accent-blue-light to-accent-cyan bg-clip-text text-transparent">
                 Projects
               </span>
             </h2>
-            <p className="text-xl text-gray-300">
-              Transforming ideas into exceptional digital experiences
+            <p className="text-lg text-dark-300">
+              Explore our portfolio of successful digital transformations
             </p>
           </div>
           
@@ -81,8 +81,8 @@ export const FeaturedProjects = () => {
           </div>
 
           {/* Gradient Overlays */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-800 to-transparent pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-800 to-transparent pointer-events-none"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-dark-800 to-transparent pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-dark-800 to-transparent pointer-events-none"></div>
         </div>
 
         {/* View All Projects */}

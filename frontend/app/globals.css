@@ -3,12 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --primary-blue: #0f172a;
-  --secondary-blue: #1e293b;
-  --accent-blue: #3b82f6;
-  --accent-purple: #8b5cf6;
+  /* Professional Color Palette */
+  --primary-dark: #0a0f1c;
+  --secondary-dark: #111827;
+  --accent-blue: #1e40af;
+  --accent-blue-light: #3b82f6;
+  --accent-cyan: #06b6d4;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --border-dark: #1e293b;
+  --border-light: #374151;
+  --success: #10b981;
+  --warning: #f59e0b;
 }
 
 * {
@@ -18,47 +25,62 @@
 }
 
 body {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
 
+/* Professional Glass Morphism */
 .glass-morphism {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.glass-morphism-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle Gradient Borders */
 .gradient-border {
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
   padding: 1px;
   border-radius: 12px;
 }
 
+.gradient-border-subtle {
+  background: linear-gradient(135deg, #374151, #4b5563);
+  padding: 1px;
+  border-radius: 8px;
+}
+
+/* Professional Hover Effects */
 .hover-lift {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Custom scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--secondary-blue);
+  background: var(--secondary-dark);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--accent-blue);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-purple);
+  background: var(--accent-blue-light);
 }
