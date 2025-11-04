@@ -6,7 +6,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16',
 });
 
+// Use the new Route Segment Config instead of export const config
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request) {
+  // Get raw body for webhook verification
   const payload = await request.text();
   const sig = request.headers.get('stripe-signature');
 
@@ -103,9 +108,6 @@ async function handlePaymentIntentSucceeded(paymentIntent) {
       console.error('Failed to update service booking for payment:', paymentIntent.id);
     }
 
-    // TODO: Send confirmation email to client
-    // TODO: Send notification to admin
-
   } catch (error) {
     console.error('Error handling payment success:', error);
   }
@@ -134,9 +136,6 @@ async function handlePaymentIntentFailed(paymentIntent) {
     } else {
       console.error('Failed to update service booking for failed payment:', paymentIntent.id);
     }
-
-    // TODO: Send failure notification to client
-    // TODO: Send alert to admin
 
   } catch (error) {
     console.error('Error handling payment failure:', error);
@@ -244,10 +243,3 @@ async function handleSubscriptionDeleted(subscription) {
     console.error('Error handling subscription deleted:', error);
   }
 }
-
-// Configure for raw body parsing
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
