@@ -1,38 +1,24 @@
 import { NextResponse } from 'next/server';
+import { projects } from '@/data/projectsData';
 
 export async function GET() {
   try {
-    // Fetch featured projects from backend API
-    const backendResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/projects/featured`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    const featuredProjects = projects.filter(project => project.featured);
+
+    return NextResponse.json({
+      success: true,
+      message: 'Featured projects retrieved successfully',
+      data: {
+        projects: featuredProjects
       }
-    );
-
-    const backendData = await backendResponse.json();
-
-    if (!backendResponse.ok) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: backendData.message || 'Failed to fetch featured projects' 
-        },
-        { status: backendResponse.status }
-      );
-    }
-
-    return NextResponse.json(backendData);
+    });
 
   } catch (error) {
     console.error('Featured projects API error:', error);
     return NextResponse.json(
       { 
         success: false, 
-        message: 'Internal server error' 
+        message: 'Failed to fetch featured projects' 
       },
       { status: 500 }
     );

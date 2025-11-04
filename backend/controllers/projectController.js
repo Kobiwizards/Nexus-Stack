@@ -29,6 +29,7 @@ const getProjects = async (req, res) => {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },
         { description: { $regex: search, $options: 'i' } },
+        { shortDescription: { $regex: search, $options: 'i' } },
         { 'technologies': { $regex: search, $options: 'i' } }
       ];
     }
@@ -37,7 +38,7 @@ const getProjects = async (req, res) => {
       .sort({ featured: -1, createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit))
-      .select('-challenges -solutions -results -gallery -seo -team');
+      .select('-__v');
 
     const total = await Project.countDocuments(query);
 
@@ -70,7 +71,7 @@ const getFeaturedProjects = async (req, res) => {
     })
     .sort({ createdAt: -1 })
     .limit(6)
-    .select('title category description image technologies budget duration liveUrl caseStudyUrl');
+    .select('title category shortDescription image technologies features results liveUrl duration');
 
     res.json(
       createResponse(true, 'Featured projects retrieved successfully', {
@@ -132,45 +133,6 @@ const getProjectCategories = async (req, res) => {
   }
 };
 
-// Update project URLs (admin only)
-const updateProjectUrls = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { liveUrl, caseStudyUrl, githubUrl } = req.body;
-
-    const project = await Project.findById(id);
-    if (!project) {
-      return res.status(404).json(
-        createResponse(false, 'Project not found')
-      );
-    }
-
-    if (liveUrl) project.liveUrl = liveUrl;
-    if (caseStudyUrl) project.caseStudyUrl = caseStudyUrl;
-    if (githubUrl) project.githubUrl = githubUrl;
-
-    await project.save();
-
-    res.json(
-      createResponse(true, 'Project URLs updated successfully', {
-        project: {
-          id: project._id,
-          title: project.title,
-          liveUrl: project.liveUrl,
-          caseStudyUrl: project.caseStudyUrl,
-          githubUrl: project.githubUrl
-        }
-      })
-    );
-
-  } catch (error) {
-    console.error('Update project URLs error:', error);
-    res.status(500).json(
-      createResponse(false, 'Failed to update project URLs', null, error.message)
-    );
-  }
-};
-
 // Create new project (admin only)
 const createProject = async (req, res) => {
   try {
@@ -193,11 +155,43 @@ const createProject = async (req, res) => {
   }
 };
 
+// Update project (admin only)
+const updateProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    const project = await Project.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    if (!project) {
+      return res.status(404).json(
+        createResponse(false, 'Project not found')
+      );
+    }
+
+    res.json(
+      createResponse(true, 'Project updated successfully', {
+        project
+      })
+    );
+
+  } catch (error) {
+    console.error('Update project error:', error);
+    res.status(500).json(
+      createResponse(false, 'Failed to update project', null, error.message)
+    );
+  }
+};
+
 module.exports = {
   getProjects,
   getFeaturedProjects,
   getProjectBySlug,
   getProjectCategories,
-  updateProjectUrls,
-  createProject
+  createProject,
+  updateProject
 };

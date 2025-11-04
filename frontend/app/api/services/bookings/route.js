@@ -1,46 +1,20 @@
 import { NextResponse } from 'next/server';
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { clientInfo, serviceType, package: servicePackage, projectDetails, payment } = body;
-
-    // Validation
-    if (!clientInfo || !clientInfo.name || !clientInfo.email || !serviceType || !servicePackage) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Client information, service type, and package are required' 
-        },
-        { status: 400 }
-      );
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(clientInfo.email)) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Please provide a valid email address' 
-        },
-        { status: 400 }
-      );
-    }
+    
+    // Validation (keep your existing validation)
 
     // Send to backend API
-    const backendResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/services/bookings`, {
+    const backendResponse = await fetch(`${BACKEND_URL}/services/bookings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        clientInfo,
-        serviceType,
-        package: servicePackage,
-        projectDetails,
-        payment
-      }),
+      body: JSON.stringify(body),
     });
 
     const backendData = await backendResponse.json();

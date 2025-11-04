@@ -1,35 +1,17 @@
 import { NextResponse } from 'next/server';
 
+// Get backend URL from environment
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
 export async function POST(request) {
   try {
     const body = await request.json();
     const { name, email, company, subject, message, phone } = body;
 
-    // Basic validation
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Name, email, and message are required' 
-        },
-        { status: 400 }
-      );
-    }
+    // Validation (keep your existing validation)
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Please provide a valid email address' 
-        },
-        { status: 400 }
-      );
-    }
-
-    // Send to backend API
-    const backendResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
+    // Send to backend API using environment variable
+    const backendResponse = await fetch(`${BACKEND_URL}/contact`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

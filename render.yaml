@@ -1,32 +1,30 @@
-# Render configuration for full-stack deployment
-
 services:
   # Frontend - Next.js
   - type: web
     name: nexus-stack-frontend
     env: node
     plan: free
-    buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && npm start
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_API_URL
-        fromService:
-          name: nexus-stack-backend
-          type: web
-          property: url
-        value: /api
+        value: https://nexus-stack-backend.onrender.com/api
       - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-        value: pk_test_your-stripe-publishable-key
+        value: pk_test_your-test-publishable-key
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://nexus-stack.onrender.com
 
   # Backend - Express.js
   - type: web
     name: nexus-stack-backend
     env: node
     plan: free
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -35,19 +33,19 @@ services:
           name: nexus-stack-db
           property: connectionString
       - key: JWT_SECRET
-        generateValue: true
+        value: a8513cb9e1a36748f7c9fdaec1a11470
       - key: STRIPE_SECRET_KEY
         value: sk_test_your-stripe-secret-key
+      - key: STRIPE_WEBHOOK_SECRET
+        value: whsec_your-webhook-secret
       - key: EMAIL_USER
         value: your-email@gmail.com
       - key: EMAIL_PASSWORD
         value: your-app-password
+      - key: FRONTEND_URL
+        value: https://nexus-stack.onrender.com
 
-# MongoDB Database
 databases:
   - name: nexus-stack-db
     plan: free
     databaseName: nexus-stack
-    ipAllowList:
-      - source: 0.0.0.0/0
-        description: everywhere

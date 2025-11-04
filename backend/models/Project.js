@@ -15,7 +15,7 @@ const projectSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Category is required'],
-    enum: ['Finance', 'Healthcare', 'E-commerce', 'Education', 'Logistics', 'Health & Fitness']
+    enum: ['E-commerce', 'SaaS', 'Finance', 'Healthcare', 'Education', 'Health & Fitness']
   },
   description: {
     type: String,
@@ -38,23 +38,18 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true
   }],
-  budget: {
-    type: Number,
-    required: [true, 'Budget is required']
+  results: [{
+    type: String,
+    required: true
+  }],
+  liveUrl: {
+    type: String,
+    required: [true, 'Live URL is required']
   },
   duration: {
     type: String,
     required: [true, 'Duration is required']
   },
-  liveUrl: {
-    type: String,
-    default: '#'
-  },
-  caseStudyUrl: {
-    type: String,
-    default: '#'
-  },
-  githubUrl: String,
   status: {
     type: String,
     enum: ['planning', 'in_progress', 'completed', 'maintenance', 'archived'],
@@ -63,38 +58,6 @@ const projectSchema = new mongoose.Schema({
   featured: {
     type: Boolean,
     default: false
-  },
-  client: {
-    name: String,
-    company: String,
-    website: String
-  },
-  team: [{
-    role: String,
-    member: String
-  }],
-  challenges: [String],
-  solutions: [String],
-  results: {
-    description: String,
-    metrics: [{
-      metric: String,
-      value: String,
-      improvement: String
-    }]
-  },
-  gallery: [{
-    image: String,
-    caption: String,
-    type: {
-      type: String,
-      enum: ['screenshot', 'design', 'demo']
-    }
-  }],
-  seo: {
-    metaTitle: String,
-    metaDescription: String,
-    keywords: [String]
   }
 }, {
   timestamps: true

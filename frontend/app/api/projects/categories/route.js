@@ -1,38 +1,24 @@
 import { NextResponse } from 'next/server';
+import { projects } from '@/data/projectsData';
 
 export async function GET() {
   try {
-    // Fetch project categories from backend API
-    const backendResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/projects/categories`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    const categories = ['All', ...new Set(projects.map(project => project.category))];
+
+    return NextResponse.json({
+      success: true,
+      message: 'Project categories retrieved successfully',
+      data: {
+        categories
       }
-    );
-
-    const backendData = await backendResponse.json();
-
-    if (!backendResponse.ok) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: backendData.message || 'Failed to fetch project categories' 
-        },
-        { status: backendResponse.status }
-      );
-    }
-
-    return NextResponse.json(backendData);
+    });
 
   } catch (error) {
     console.error('Project categories API error:', error);
     return NextResponse.json(
       { 
         success: false, 
-        message: 'Internal server error' 
+        message: 'Failed to fetch project categories' 
       },
       { status: 500 }
     );
