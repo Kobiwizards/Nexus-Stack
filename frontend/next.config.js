@@ -2,10 +2,10 @@
 const nextConfig = {
   images: {
     domains: ['images.unsplash.com'],
-    unoptimized: true,
+    unoptimized: true, // Required for static export
   },
   trailingSlash: true,
-  output: 'export',
+  output: 'export', // Enable static exports
 }
 
 module.exports = nextConfig

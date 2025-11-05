@@ -6,12 +6,14 @@
     "build": "next build",
     "start": "next start -p $PORT",
     "lint": "next lint",
+    "build:static": "next build",
+    "start:static": "serve out -p $PORT",
     "test:production": "node test-production.js",
     "test:health": "node test-health.js",
     "test:all": "node test-all.js",
-    "test:render": "npm run build && PORT=10000 npm start",
-    "debug:build": "npm run build && echo '✅ Build completed successfully'",
-    "debug:start": "PORT=10000 npm start",
+    "test:render": "npm run build:static && PORT=10000 npm run start:static",
+    "debug:build": "npm run build:static && echo '✅ Static build completed successfully'",
+    "debug:start": "PORT=10000 serve out",
     "debug:full": "npm run debug:build && npm run debug:start"
   },
   "dependencies": {
@@ -23,7 +25,8 @@
     "postcss": "^8.4.0",
     "autoprefixer": "^10.4.0",
     "lucide-react": "^0.292.0",
-    "react-intersection-observer": "^9.5.0"
+    "react-intersection-observer": "^9.5.0",
+    "serve": "^14.2.0"
   },
   "devDependencies": {
     "eslint": "^8.0.0",
