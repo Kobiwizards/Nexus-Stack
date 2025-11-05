@@ -49,11 +49,14 @@ export default function AboutPage() {
                 </div>
               </div>
               <div className="flex justify-center">
-                <div className="w-64 h-64 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <div className="text-2xl font-bold">{companyInfo.founder.split(' ')[0]}</div>
-                    <div className="text-sm opacity-80">Founder & CEO</div>
-                  </div>
+                <div className="relative">
+                  <img
+                    src="/images/founder-profile.jpg"  // UPDATE THIS FILENAME
+                    alt={`${companyInfo.founder} - Founder & CEO`}
+                    className="w-64 h-64 rounded-full object-cover border-4 border-blue-500/20"
+                  />
+                  {/* Optional: Add a subtle glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-600/10"></div>
                 </div>
               </div>
             </div>
