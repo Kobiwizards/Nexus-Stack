@@ -12,6 +12,7 @@ const { apiLimiter } = require('./middleware/rateLimit');
 const contactRoutes = require('./routes/contact');
 const projectRoutes = require('./routes/projects');
 const testimonialRoutes = require('./routes/testimonials');
+const serviceRoutes = require('./routes/services');
 
 const app = express();
 
@@ -22,6 +23,7 @@ connectDB();
 const corsOptions = {
   origin: [
     'https://nexus-stack.onrender.com',
+    'https://nexus-stack-frontend.onrender.com',
     'http://localhost:3000'
   ],
   credentials: true,
@@ -42,6 +44,7 @@ app.use('/api/', apiLimiter);
 app.use('/api/contact', contactRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/services', serviceRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -54,11 +57,38 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 404 handler
+// Root route - ADDED THIS
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: '🚀 Nexus Stack Backend API is running!',
+    version: '1.0.0',
+    environment: process.env.NODE_ENV || 'production',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/api/health',
+      contact: '/api/contact',
+      projects: '/api/projects',
+      testimonials: '/api/testimonials',
+      services: '/api/services'
+    },
+    documentation: 'See /api/health for detailed API status'
+  });
+});
+
+// 404 handler - MUST BE AFTER ALL ROUTES
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
-    message: 'Route not found'
+    message: 'Route not found',
+    availableRoutes: [
+      'GET /',
+      'GET /api/health',
+      'GET /api/projects',
+      'GET /api/testimonials',
+      'POST /api/contact',
+      'POST /api/services/bookings'
+    ]
   });
 });
 
