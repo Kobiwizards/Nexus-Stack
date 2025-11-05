@@ -5,7 +5,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:production": "node test-production.js",
+    "test:health": "node test-health.js",
+    "test:all": "node test-all.js",
+    "test:render": "npm run build && PORT=10000 npm start",
+    "debug:build": "npm run build && echo '✅ Build completed successfully'",
+    "debug:start": "PORT=10000 npm start",
+    "debug:full": "npm run debug:build && npm run debug:start"
   },
   "dependencies": {
     "next": "14.0.0",
