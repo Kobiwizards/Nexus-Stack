@@ -7,6 +7,9 @@ services:
     rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm start
+    # Add these:
+    healthCheckPath: /api/health
+    autoDeploy: true
     envVars:
       - key: PORT
         value: 10000
@@ -18,7 +21,7 @@ services:
         value: pk_test_your-test-publishable-key
       - key: NEXT_PUBLIC_SITE_URL
         value: https://nexus-stack.onrender.com
-        
+
   # Backend - Express.js
   - type: web
     name: nexus-stack-backend
