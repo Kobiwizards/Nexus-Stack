@@ -1,55 +1,17 @@
-const Project = require('../models/Project');
 const { createResponse } = require('../utils/helpers');
 
 // Get all projects with filtering and pagination
 const getProjects = async (req, res) => {
   try {
-    const {
-      page = 1,
-      limit = 12,
-      category,
-      featured,
-      status = 'completed',
-      search
-    } = req.query;
-
-    const skip = (page - 1) * limit;
-
-    let query = { status };
-
-    if (category && category !== 'All') {
-      query.category = category;
-    }
-
-    if (featured !== undefined) {
-      query.featured = featured === 'true';
-    }
-
-    if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-        { shortDescription: { $regex: search, $options: 'i' } },
-        { 'technologies': { $regex: search, $options: 'i' } }
-      ];
-    }
-
-    const projects = await Project.find(query)
-      .sort({ featured: -1, createdAt: -1 })
-      .skip(skip)
-      .limit(parseInt(limit))
-      .select('-__v');
-
-    const total = await Project.countDocuments(query);
-
+    // Return empty data since we're using static data in frontend
     res.json(
       createResponse(true, 'Projects retrieved successfully', {
-        projects,
+        projects: [],
         pagination: {
-          page: parseInt(page),
-          limit: parseInt(limit),
-          total,
-          pages: Math.ceil(total / limit)
+          page: 1,
+          limit: 12,
+          total: 0,
+          pages: 0
         }
       })
     );
@@ -65,17 +27,10 @@ const getProjects = async (req, res) => {
 // Get featured projects for homepage
 const getFeaturedProjects = async (req, res) => {
   try {
-    const projects = await Project.find({
-      featured: true,
-      status: 'completed'
-    })
-    .sort({ createdAt: -1 })
-    .limit(6)
-    .select('title category shortDescription image technologies features results liveUrl duration');
-
+    // Return empty featured projects
     res.json(
       createResponse(true, 'Featured projects retrieved successfully', {
-        projects
+        projects: []
       })
     );
 
@@ -92,18 +47,9 @@ const getProjectBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const project = await Project.findOne({ slug });
-
-    if (!project) {
-      return res.status(404).json(
-        createResponse(false, 'Project not found')
-      );
-    }
-
-    res.json(
-      createResponse(true, 'Project retrieved successfully', {
-        project
-      })
+    // Return project not found since we're using static data
+    return res.status(404).json(
+      createResponse(false, 'Project not found - using static data in frontend')
     );
 
   } catch (error) {
@@ -117,11 +63,10 @@ const getProjectBySlug = async (req, res) => {
 // Get project categories
 const getProjectCategories = async (req, res) => {
   try {
-    const categories = await Project.distinct('category', { status: 'completed' });
-
+    // Return empty categories array
     res.json(
       createResponse(true, 'Project categories retrieved successfully', {
-        categories: ['All', ...categories]
+        categories: ['All'] // Just return 'All' since we have no projects in DB
       })
     );
 
@@ -133,17 +78,13 @@ const getProjectCategories = async (req, res) => {
   }
 };
 
-// Create new project (admin only)
+// Create new project (admin only) - Keep for future use
 const createProject = async (req, res) => {
   try {
-    const projectData = req.body;
-
-    const project = new Project(projectData);
-    await project.save();
-
+    // Return message that projects are using static data
     res.status(201).json(
-      createResponse(true, 'Project created successfully', {
-        project
+      createResponse(true, 'Project creation disabled - using static data in frontend', {
+        project: null
       })
     );
 
@@ -155,27 +96,13 @@ const createProject = async (req, res) => {
   }
 };
 
-// Update project (admin only)
+// Update project (admin only) - Keep for future use
 const updateProject = async (req, res) => {
   try {
-    const { id } = req.params;
-    const updateData = req.body;
-
-    const project = await Project.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    );
-
-    if (!project) {
-      return res.status(404).json(
-        createResponse(false, 'Project not found')
-      );
-    }
-
+    // Return message that projects are using static data
     res.json(
-      createResponse(true, 'Project updated successfully', {
-        project
+      createResponse(true, 'Project update disabled - using static data in frontend', {
+        project: null
       })
     );
 
@@ -194,5 +121,4 @@ module.exports = {
   getProjectCategories,
   createProject,
   updateProject
-  // updateProjectUrls temporarily removed from exports
 };

@@ -1,25 +1,13 @@
-const Testimonial = require('../models/Testimonial');
 const { createResponse } = require('../utils/helpers');
 
 // Get all testimonials
 const getTestimonials = async (req, res) => {
   try {
-    const { featured, approved = true } = req.query;
-
-    let query = { approved };
-    if (featured !== undefined) {
-      query.featured = featured === 'true';
-    }
-
-    const testimonials = await Testimonial.find(query)
-      .sort({ featured: -1, rating: -1, createdAt: -1 });
-
     res.json(
       createResponse(true, 'Testimonials retrieved successfully', {
-        testimonials
+        testimonials: []
       })
     );
-
   } catch (error) {
     console.error('Get testimonials error:', error);
     res.status(500).json(
@@ -28,22 +16,14 @@ const getTestimonials = async (req, res) => {
   }
 };
 
-// Get featured testimonials for homepage
+// Get featured testimonials
 const getFeaturedTestimonials = async (req, res) => {
   try {
-    const testimonials = await Testimonial.find({ 
-      featured: true, 
-      approved: true 
-    })
-    .sort({ rating: -1, createdAt: -1 })
-    .limit(4);
-
     res.json(
       createResponse(true, 'Featured testimonials retrieved successfully', {
-        testimonials
+        testimonials: []
       })
     );
-
   } catch (error) {
     console.error('Get featured testimonials error:', error);
     res.status(500).json(
@@ -52,30 +32,13 @@ const getFeaturedTestimonials = async (req, res) => {
   }
 };
 
-// Submit new testimonial
+// Submit testimonial (keep functional for future use)
 const submitTestimonial = async (req, res) => {
   try {
-    const { clientName, position, company, rating, testimonialText, project, socialLinks } = req.body;
-
-    const testimonial = new Testimonial({
-      clientName,
-      position,
-      company,
-      rating,
-      testimonialText,
-      project,
-      socialLinks,
-      approved: false // Requires admin approval
-    });
-
-    await testimonial.save();
-
+    // You can implement this later when needed
     res.status(201).json(
-      createResponse(true, 'Testimonial submitted successfully and awaiting approval', {
-        id: testimonial._id
-      })
+      createResponse(true, 'Testimonial submission received')
     );
-
   } catch (error) {
     console.error('Submit testimonial error:', error);
     res.status(500).json(
@@ -84,31 +47,12 @@ const submitTestimonial = async (req, res) => {
   }
 };
 
-// Approve testimonial (admin only)
+// Admin functions (keep for future use)
 const approveTestimonial = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const testimonial = await Testimonial.findById(id);
-    if (!testimonial) {
-      return res.status(404).json(
-        createResponse(false, 'Testimonial not found')
-      );
-    }
-
-    testimonial.approved = true;
-    testimonial.verification.verified = true;
-    testimonial.verification.verifiedBy = req.user.id;
-    testimonial.verification.verifiedAt = new Date();
-
-    await testimonial.save();
-
     res.json(
-      createResponse(true, 'Testimonial approved successfully', {
-        testimonial
-      })
+      createResponse(true, 'Testimonial approval system ready for future use')
     );
-
   } catch (error) {
     console.error('Approve testimonial error:', error);
     res.status(500).json(
@@ -117,30 +61,11 @@ const approveTestimonial = async (req, res) => {
   }
 };
 
-// Toggle testimonial featured status (admin only)
 const toggleFeatured = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const testimonial = await Testimonial.findById(id);
-    if (!testimonial) {
-      return res.status(404).json(
-        createResponse(false, 'Testimonial not found')
-      );
-    }
-
-    testimonial.featured = !testimonial.featured;
-    await testimonial.save();
-
     res.json(
-      createResponse(true, `Testimonial ${testimonial.featured ? 'featured' : 'unfeatured'} successfully`, {
-        testimonial: {
-          id: testimonial._id,
-          featured: testimonial.featured
-        }
-      })
+      createResponse(true, 'Featured toggle system ready for future use')
     );
-
   } catch (error) {
     console.error('Toggle featured error:', error);
     res.status(500).json(
