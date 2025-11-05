@@ -1,5 +1,6 @@
+// contexts/ModalContext.jsx
 'use client'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 const ModalContext = createContext()
 
@@ -17,6 +18,22 @@ export function ModalProvider({ children }) {
     setIsModalOpen(false)
     document.body.style.overflow = 'unset'
   }
+
+  // ADD THIS USEEFFECT TO LISTEN FOR THE CUSTOM EVENT
+  useEffect(() => {
+    const handleOpenModal = (event) => {
+      const type = event.detail?.type || 'project'
+      openModal(type)
+    }
+
+    // Listen for the custom event that Navbar dispatches
+    window.addEventListener('openModal', handleOpenModal)
+
+    // Cleanup the event listener
+    return () => {
+      window.removeEventListener('openModal', handleOpenModal)
+    }
+  }, []) // Empty dependency array means this runs once on mount
 
   return (
     <ModalContext.Provider value={{
