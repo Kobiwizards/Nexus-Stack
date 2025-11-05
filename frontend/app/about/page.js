@@ -6,6 +6,11 @@ import { StatsSection } from '@/components/sections/StatsSection'
 import { companyInfo } from '@/data/companyInfo'
 
 export default function AboutPage() {
+  // Add this at the top of your AboutPage component
+  console.log('Company Info:', companyInfo);
+  console.log('Founder:', companyInfo.founder);
+  console.log('Image Path:', '/images/founder-profile.jpg');
+
   return (
     <main className="min-h-screen bg-slate-900">
       <Navbar />
@@ -50,13 +55,33 @@ export default function AboutPage() {
               </div>
               <div className="flex justify-center">
                 <div className="relative">
+                  {/* Debug container */}
+                  <div className="border-2 border-dashed border-red-500 p-4 rounded-lg mb-4">
+                    <p className="text-red-400 text-sm mb-2">Debug Info:</p>
+                    <p className="text-white text-xs">Founder: {companyInfo.founder}</p>
+                    <p className="text-white text-xs">Image: /images/founder-profile.jpg</p>
+                  </div>
+                  
                   <img
-                    src="/images/founder-profile.jpg"  // UPDATE THIS FILENAME
+                    src="/images/founder-profile.jpg"
                     alt={`${companyInfo.founder} - Founder & CEO`}
-                    className="w-64 h-64 rounded-full object-cover border-4 border-blue-500/20"
+                    className="w-64 h-64 rounded-full object-cover border-4 border-blue-500/20 bg-gray-700"
+                    onError={(e) => {
+                      console.error('❌ Image failed to load:', e.target.src);
+                      e.target.style.border = '2px solid red';
+                    }}
+                    onLoad={(e) => {
+                      console.log('✅ Image loaded successfully:', e.target.src);
+                    }}
                   />
-                  {/* Optional: Add a subtle glow effect */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-600/10"></div>
+                  
+                  {/* Fallback if image doesn't load */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-600/10 flex items-center justify-center text-white text-center">
+                    <div className="text-sm">
+                      <div>Davis Kobira</div>
+                      <div className="text-xs opacity-70">Founder & CEO</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
