@@ -10,6 +10,7 @@ export const Navbar = () => {
     { name: 'Services', href: '/services' },
     { name: 'Work', href: '/work' },
     { name: 'About', href: '/about' },
+    { name: 'Careers', href: '/careers' }, // Added Careers page
     { name: 'Contact', href: '/contact' },
   ]
 
