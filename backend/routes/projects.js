@@ -5,8 +5,8 @@ const {
   getFeaturedProjects,
   getProjectBySlug,
   getProjectCategories,
-  updateProjectUrls,
   createProject
+  // updateProjectUrls temporarily removed until needed
 } = require('../controllers/projectController');
 const { auth, adminAuth } = require('../middleware/auth');
 
@@ -18,6 +18,6 @@ router.get('/:slug', getProjectBySlug);
 
 // Admin routes
 router.post('/', auth, adminAuth, createProject);
-router.patch('/:id/urls', auth, adminAuth, updateProjectUrls);
+// router.patch('/:id/urls', auth, adminAuth, updateProjectUrls); // Temporarily removed
 
 module.exports = router;

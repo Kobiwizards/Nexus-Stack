@@ -4,27 +4,27 @@ const { createResponse } = require('../utils/helpers');
 // Get all projects with filtering and pagination
 const getProjects = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 12, 
-      category, 
-      featured, 
+    const {
+      page = 1,
+      limit = 12,
+      category,
+      featured,
       status = 'completed',
-      search 
+      search
     } = req.query;
 
     const skip = (page - 1) * limit;
-    
+
     let query = { status };
-    
+
     if (category && category !== 'All') {
       query.category = category;
     }
-    
+
     if (featured !== undefined) {
       query.featured = featured === 'true';
     }
-    
+
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },
@@ -65,9 +65,9 @@ const getProjects = async (req, res) => {
 // Get featured projects for homepage
 const getFeaturedProjects = async (req, res) => {
   try {
-    const projects = await Project.find({ 
-      featured: true, 
-      status: 'completed' 
+    const projects = await Project.find({
+      featured: true,
+      status: 'completed'
     })
     .sort({ createdAt: -1 })
     .limit(6)
@@ -93,7 +93,7 @@ const getProjectBySlug = async (req, res) => {
     const { slug } = req.params;
 
     const project = await Project.findOne({ slug });
-    
+
     if (!project) {
       return res.status(404).json(
         createResponse(false, 'Project not found')
@@ -118,7 +118,7 @@ const getProjectBySlug = async (req, res) => {
 const getProjectCategories = async (req, res) => {
   try {
     const categories = await Project.distinct('category', { status: 'completed' });
-    
+
     res.json(
       createResponse(true, 'Project categories retrieved successfully', {
         categories: ['All', ...categories]
@@ -194,4 +194,5 @@ module.exports = {
   getProjectCategories,
   createProject,
   updateProject
+  // updateProjectUrls temporarily removed from exports
 };
