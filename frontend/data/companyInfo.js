@@ -1,6 +1,6 @@
 export const companyInfo = {
   name: 'Nexus Stack',
-  email: 'kobiwizards@gmail.com',
+  email: 'nexusstackcompanyltd@gmail.com', // Update this line
   founder: 'Davis Kobira',
   location: 'Worldwide',
   headquarters: 'Salt Lake City, 84106',

@@ -23,8 +23,15 @@ const submitContact = async (req, res) => {
     // Send confirmation email to user
     await emailService.sendContactConfirmation({ name, email, subject, message });
 
-    // Notify admin
-    await emailService.notifyAdminAboutInquiry({ name, email, company, subject, message }, 'Contact Form');
+    // Notify admin - emails will go to nexusstackcompanyltd@gmail.com
+    await emailService.notifyAdminAboutInquiry({ 
+      name, 
+      email, 
+      company, 
+      subject, 
+      message,
+      phone 
+    }, 'Contact Form');
 
     res.status(201).json(
       createResponse(true, 'Contact form submitted successfully', {
@@ -70,7 +77,7 @@ const submitProjectInquiry = async (req, res) => {
       details
     });
 
-    // Notify admin
+    // Notify admin - emails will go to nexusstackcompanyltd@gmail.com
     await emailService.notifyAdminAboutInquiry({
       name,
       email,

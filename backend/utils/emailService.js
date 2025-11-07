@@ -5,7 +5,7 @@ class EmailService {
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
+        user: process.env.EMAIL_USER, // nexusstackcompanyltd@gmail.com
         pass: process.env.EMAIL_PASSWORD
       }
     });
@@ -51,7 +51,7 @@ class EmailService {
   async notifyAdminAboutInquiry(inquiryData, type) {
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_EMAIL,
+      to: process.env.ADMIN_EMAIL || 'nexusstackcompanyltd@gmail.com', // Default to new email
       subject: `New ${type} Submission - Nexus Stack`,
       html: this.generateAdminNotificationTemplate(inquiryData, type)
     };
@@ -91,14 +91,14 @@ class EmailService {
             <h3>Project Details:</h3>
             <p><strong>Service:</strong> ${data.service}</p>
             <p><strong>Budget:</strong> ${data.budget}</p>
-            <p><strong>Project Type:</strong> ${data.projectType.join(', ')}</p>
+            <p><strong>Project Type:</strong> ${data.projectType?.join(', ') || 'Not specified'}</p>
             <p><strong>Message:</strong> ${data.details}</p>
             <p>We'll be in touch soon to discuss your project in more detail.</p>
             <p>Best regards,<br>The Nexus Stack Team</p>
           </div>
           <div class="footer">
             <p>Nexus Stack &copy; ${new Date().getFullYear()}</p>
-            <p>Email: kobiwizards@gmail.com | Phone: +1 (980) 419-2691</p>
+            <p>Email: nexusstackcompanyltd@gmail.com | Phone: +1 (980) 419-2691</p>
           </div>
         </div>
       </body>
@@ -136,7 +136,7 @@ class EmailService {
           </div>
           <div class="footer">
             <p>Nexus Stack &copy; ${new Date().getFullYear()}</p>
-            <p>Email: kobiwizards@gmail.com | Phone: +1 (980) 419-2691</p>
+            <p>Email: nexusstackcompanyltd@gmail.com | Phone: +1 (980) 419-2691</p>
           </div>
         </div>
       </body>
@@ -174,7 +174,7 @@ class EmailService {
             ${type === 'Project Inquiry' ? `
               <p><strong>Service:</strong> ${data.service}</p>
               <p><strong>Budget:</strong> ${data.budget}</p>
-              <p><strong>Project Type:</strong> ${data.projectType.join(', ')}</p>
+              <p><strong>Project Type:</strong> ${data.projectType?.join(', ') || 'Not specified'}</p>
             ` : `
               <p><strong>Subject:</strong> ${data.subject}</p>
             `}
