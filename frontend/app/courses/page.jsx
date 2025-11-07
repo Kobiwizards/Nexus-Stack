@@ -1,17 +1,28 @@
 'use client'
+import { useState } from 'react'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { ProjectFormModal } from '@/components/forms/ProjectFormModal'
 import { Button } from '@/components/ui/Button'
+import { Modal } from '@/components/ui/Modal'
 
 export default function CoursesPage() {
+  const [selectedSyllabus, setSelectedSyllabus] = useState(null)
+  const [isSyllabusOpen, setIsSyllabusOpen] = useState(false)
+
   const openModal = () => {
     const event = new CustomEvent('openModal', { detail: { type: 'project' } })
     window.dispatchEvent(event)
   }
 
+  const openSyllabus = (course) => {
+    setSelectedSyllabus(course)
+    setIsSyllabusOpen(true)
+  }
+
   const courseCategories = [
     {
+      id: 'ai-automation',
       title: "AI Automation Mastery",
       description: "Learn to build intelligent automation systems that transform business operations",
       icon: "🤖",
@@ -25,9 +36,29 @@ export default function CoursesPage() {
       level: "Intermediate to Advanced",
       duration: "8 weeks",
       projects: 5,
-      color: "from-purple-500 to-pink-600"
+      color: "from-purple-500 to-pink-600",
+      syllabus: {
+        modules: [
+          "Module 1: AI Automation Fundamentals",
+          "Module 2: Machine Learning for Automation",
+          "Module 3: Natural Language Processing",
+          "Module 4: Computer Vision & Image Recognition",
+          "Module 5: Robotic Process Automation (RPA)",
+          "Module 6: AI-Powered Workflow Design",
+          "Module 7: Real-world Automation Projects",
+          "Module 8: Deployment & Scaling"
+        ],
+        tools: ["Python", "TensorFlow", "OpenCV", "UiPath", "Automation Anywhere"],
+        outcomes: [
+          "Build AI-powered automation systems",
+          "Implement ML models for process optimization",
+          "Create intelligent document processing",
+          "Develop computer vision applications"
+        ]
+      }
     },
     {
+      id: 'software-ai',
       title: "Software Development with AI",
       description: "Revolutionize your coding workflow with AI-assisted development techniques",
       icon: "💻",
@@ -41,9 +72,31 @@ export default function CoursesPage() {
       level: "Beginner to Advanced",
       duration: "10 weeks", 
       projects: 6,
-      color: "from-blue-500 to-cyan-600"
+      color: "from-blue-500 to-cyan-600",
+      syllabus: {
+        modules: [
+          "Module 1: AI in Modern Development",
+          "Module 2: Code Generation with AI",
+          "Module 3: Intelligent Debugging",
+          "Module 4: Automated Testing with AI",
+          "Module 5: AI-Powered Code Review",
+          "Module 6: Smart Documentation",
+          "Module 7: Architecture Design with AI",
+          "Module 8: AI Development Tools",
+          "Module 9: Team Collaboration with AI",
+          "Module 10: Future of AI Development"
+        ],
+        tools: ["GitHub Copilot", "ChatGPT", "VS Code", "Jest", "Cypress"],
+        outcomes: [
+          "Write code 3x faster with AI assistance",
+          "Automate testing and debugging",
+          "Improve code quality with AI review",
+          "Design better software architecture"
+        ]
+      }
     },
     {
+      id: 'fullstack-ai',
       title: "Full-Stack AI Solutions",
       description: "Build complete AI-powered applications from frontend to backend",
       icon: "🚀",
@@ -57,7 +110,30 @@ export default function CoursesPage() {
       level: "Advanced",
       duration: "12 weeks",
       projects: 4,
-      color: "from-green-500 to-emerald-600"
+      color: "from-green-500 to-emerald-600",
+      syllabus: {
+        modules: [
+          "Module 1: Full-Stack AI Architecture",
+          "Module 2: Next.js with AI Integration",
+          "Module 3: Node.js AI Microservices",
+          "Module 4: Real-time AI Features",
+          "Module 5: Database Design for AI",
+          "Module 6: API Development for AI",
+          "Module 7: Authentication & Security",
+          "Module 8: Deployment Strategies",
+          "Module 9: Performance Optimization",
+          "Module 10: Monitoring & Maintenance",
+          "Module 11: Scaling AI Applications",
+          "Module 12: Capstone Project"
+        ],
+        tools: ["Next.js", "Node.js", "PostgreSQL", "Docker", "AWS"],
+        outcomes: [
+          "Build complete AI-powered web applications",
+          "Integrate AI into full-stack projects",
+          "Deploy and scale AI applications",
+          "Create real-time AI features"
+        ]
+      }
     }
   ]
 
@@ -121,6 +197,7 @@ export default function CoursesPage() {
                 Book a Consultation
               </Button>
               <Button
+                onClick={() => openSyllabus(courseCategories[0])}
                 variant="outline"
                 size="lg"
               >
@@ -183,13 +260,22 @@ export default function CoursesPage() {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-400">{course.projects} Projects</span>
-                        <Button
-                          onClick={openModal}
-                          variant="primary"
-                          size="sm"
-                        >
-                          Enroll Now
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => openSyllabus(course)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Syllabus
+                          </Button>
+                          <Button
+                            onClick={openModal}
+                            variant="primary"
+                            size="sm"
+                          >
+                            Enroll
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -242,6 +328,7 @@ export default function CoursesPage() {
                   Book Your Session Now
                 </Button>
                 <Button
+                  onClick={() => openSyllabus(courseCategories[0])}
                   variant="outline"
                   size="lg"
                 >
@@ -256,6 +343,102 @@ export default function CoursesPage() {
           </div>
         </div>
       </div>
+
+      {/* Syllabus Modal */}
+      <Modal isOpen={isSyllabusOpen} onClose={() => setIsSyllabusOpen(false)}>
+        <div className="p-6 max-h-[80vh] overflow-y-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white">
+              {selectedSyllabus?.title} - Course Syllabus
+            </h2>
+            <button
+              onClick={() => setIsSyllabusOpen(false)}
+              className="text-dark-300 hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700/50"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {selectedSyllabus && (
+            <div className="space-y-6">
+              {/* Course Overview */}
+              <div className="bg-dark-700/50 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-white mb-2">Course Overview</h3>
+                <p className="text-gray-300">{selectedSyllabus.description}</p>
+                <div className="grid grid-cols-2 gap-4 mt-3">
+                  <div>
+                    <span className="text-gray-400 text-sm">Level:</span>
+                    <p className="text-white">{selectedSyllabus.level}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-400 text-sm">Duration:</span>
+                    <p className="text-white">{selectedSyllabus.duration}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-400 text-sm">Projects:</span>
+                    <p className="text-white">{selectedSyllabus.projects} real projects</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Modules */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Course Modules</h3>
+                <div className="space-y-2">
+                  {selectedSyllabus.syllabus.modules.map((module, index) => (
+                    <div key={index} className="flex items-center p-3 bg-dark-700/30 rounded-lg">
+                      <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 text-sm font-bold mr-3">
+                        {index + 1}
+                      </div>
+                      <span className="text-gray-300">{module}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tools & Technologies */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Tools & Technologies</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedSyllabus.syllabus.tools.map((tool, index) => (
+                    <span key={index} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Learning Outcomes */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">What You'll Achieve</h3>
+                <ul className="space-y-2">
+                  {selectedSyllabus.syllabus.outcomes.map((outcome, index) => (
+                    <li key={index} className="flex items-center text-gray-300">
+                      <svg className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      {outcome}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* CTA */}
+              <div className="pt-4 border-t border-dark-600">
+                <Button
+                  onClick={openModal}
+                  variant="primary"
+                  className="w-full"
+                >
+                  Enroll in {selectedSyllabus.title}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </Modal>
 
       <Footer />
       <ProjectFormModal />

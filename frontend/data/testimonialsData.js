@@ -1,66 +1,122 @@
 export const testimonials = [
   {
     id: 1,
-    clientName: "Sarah Chen",
+    name: "Sarah Chen",
     position: "CTO",
-    company: "TechInnovate Inc.",
+    company: "TechFlow Solutions",
+    text: "Nexus Stack transformed our e-commerce platform with their AI-powered solutions. Our conversion rates increased by 45% and customer satisfaction scores are at an all-time high. Their team's expertise in modern tech stacks is exceptional.",
     rating: 5,
-    testimonialText: "Nexus Stack transformed our legacy systems into a modern, scalable platform. Their expertise in AI integration helped us reduce operational costs by 40%.",
-    avatarUrl: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-    project: "Enterprise AI System",
+    avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop&crop=face",
+    project: "E-commerce AI Platform",
     featured: true,
-    approved: true,
-    verification: {
-      verified: true,
-      verifiedAt: new Date().toISOString()
-    }
+    approved: true
   },
   {
     id: 2,
-    clientName: "Marcus Johnson",
+    name: "Marcus Johnson",
     position: "Product Director",
-    company: "FinFlow Solutions",
+    company: "InnovateLabs",
+    text: "Working with Nexus Stack was a game-changer for our SaaS product. They delivered a scalable architecture that handles millions of requests daily. Their attention to detail and commitment to quality is unmatched in the industry.",
     rating: 5,
-    testimonialText: "The mobile app developed by Nexus Stack exceeded our expectations. User engagement increased by 300% in the first quarter post-launch.",
-    avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    project: "Financial Mobile App",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+    project: "SaaS Analytics Platform",
     featured: true,
-    approved: true,
-    verification: {
-      verified: true,
-      verifiedAt: new Date().toISOString()
-    }
+    approved: true
   },
   {
     id: 3,
-    clientName: "Elena Rodriguez",
-    position: "CEO",
-    company: "HealthFirst Clinic",
+    name: "Priya Sharma",
+    position: "Head of Digital Transformation",
+    company: "Global Finance Corp",
+    text: "The financial dashboard Nexus Stack built for us revolutionized how we analyze market data. Real-time analytics, beautiful visualizations, and rock-solid security. They truly understand enterprise needs.",
     rating: 5,
-    testimonialText: "Their healthcare portal streamlined our operations dramatically. Patient satisfaction scores are at an all-time high thanks to the seamless experience.",
-    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    project: "Healthcare Management System",
-    featured: false,
-    approved: true,
-    verification: {
-      verified: true,
-      verifiedAt: new Date().toISOString()
-    }
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
+    project: "Financial Analytics Dashboard",
+    featured: true,
+    approved: true
   },
   {
     id: 4,
-    clientName: "David Kim",
-    position: "Operations Manager",
-    company: "Global Logistics Co.",
+    name: "David Rodriguez",
+    position: "CEO",
+    company: "HealthTech Innovations",
+    text: "Our healthcare platform needed to be both powerful and compliant. Nexus Stack delivered beyond expectations. HIPAA compliance, seamless integrations, and a beautiful user experience. Highly recommended!",
     rating: 5,
-    testimonialText: "The supply chain system built by Nexus Stack provided real-time visibility we never had before. Delivery efficiency improved by 65%.",
-    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    project: "Logistics Tracking Platform",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+    project: "Healthcare Management System",
+    featured: true,
+    approved: true
+  },
+  {
+    id: 5,
+    name: "Aisha Mohammed",
+    position: "Operations Manager",
+    company: "EduTech Global",
+    text: "The learning management system they built handles 50,000+ students seamlessly. The AI-powered recommendation engine has increased course completion rates by 30%. Exceptional work from start to finish.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+    project: "AI Learning Platform",
     featured: false,
-    approved: true,
-    verification: {
-      verified: true,
-      verifiedAt: new Date().toISOString()
-    }
+    approved: true
+  },
+  {
+    id: 6,
+    name: "James Wilson",
+    position: "Founder",
+    company: "StartUp Ventures",
+    text: "As a startup, we needed a partner who could move fast without compromising quality. Nexus Stack delivered our MVP in record time and helped us secure Series A funding. They're more than developers - they're strategic partners.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=400&fit=crop&crop=face",
+    project: "Mobile Fitness App",
+    featured: false,
+    approved: true
+  },
+  {
+    id: 7,
+    name: "Lena Kowalski",
+    position: "Digital Marketing Director",
+    company: "Fashion Forward Inc",
+    text: "Our e-commerce platform had performance issues that were costing us sales. Nexus Stack optimized everything - from database queries to frontend loading. Page load times improved by 60% and conversions increased dramatically.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face",
+    project: "E-commerce Optimization",
+    featured: false,
+    approved: true
+  },
+  {
+    id: 8,
+    name: "Carlos Martinez",
+    position: "IT Director",
+    company: "Manufacturing Plus",
+    text: "The inventory management system they developed has saved us thousands in operational costs. Real-time tracking, predictive analytics, and seamless ERP integration. Their technical expertise is outstanding.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop&crop=face",
+    project: "Inventory Management System",
+    featured: false,
+    approved: true
+  },
+  {
+    id: 9,
+    name: "Yuki Tanaka",
+    position: "Product Manager",
+    company: "GameDev Studios",
+    text: "Building our gaming platform required cutting-edge technology and scalability. Nexus Stack delivered a robust backend that handles peak traffic effortlessly. Their cloud architecture knowledge is impressive.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop&crop=face",
+    project: "Gaming Platform Backend",
+    featured: false,
+    approved: true
+  },
+  {
+    id: 10,
+    name: "Olivia Parker",
+    position: "COO",
+    company: "Consulting Partners LLC",
+    text: "We needed a custom CRM that could adapt to our unique workflow. Nexus Stack not only built exactly what we needed but also trained our team. The support and documentation were excellent throughout.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=400&h=400&fit=crop&crop=face",
+    project: "Custom CRM Solution",
+    featured: false,
+    approved: true
   }
 ]

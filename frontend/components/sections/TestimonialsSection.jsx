@@ -2,11 +2,14 @@
 import { testimonials } from '@/data/testimonialsData'
 
 export const TestimonialsSection = () => {
+  console.log('Total testimonials:', testimonials.length)
+  console.log('Featured testimonials:', testimonials.filter(t => t.featured).length)
+  console.log('Approved testimonials:', testimonials.filter(t => t.approved).length)
+
   return (
     <section className="py-20 px-4 relative">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-800"></div>
-      
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -21,10 +24,17 @@ export const TestimonialsSection = () => {
           </p>
         </div>
 
+        {/* Debug Info */}
+        <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-lg p-4 mb-8">
+          <p className="text-yellow-300 text-sm">
+            Debug: Showing {testimonials.filter(t => t.approved).length} of {testimonials.length} testimonials
+          </p>
+        </div>
+
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {testimonials.map(testimonial => (
-            <div key={testimonial.id} className="gradient-border hover-lift group">
+          {testimonials.filter(t => t.approved).map(testimonial => ( // Show all approved
+            <div key={testimonial.id} className="gradient-border hover-lift group">        
               <div className="bg-slate-800 rounded-xl p-6 h-full">
                 {/* Rating */}
                 <div className="flex mb-4">
@@ -51,11 +61,15 @@ export const TestimonialsSection = () => {
                     src={testimonial.avatar}
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full mr-4"
+                    onError={(e) => {
+                      console.error('Image failed to load:', testimonial.avatar)
+                      e.target.style.display = 'none'
+                    }}
                   />
                   <div>
-                    <div className="font-semibold text-white">{testimonial.name}</div>
-                    <div className="text-sm text-gray-400">{testimonial.position}</div>
-                    <div className="text-sm text-blue-400">{testimonial.company}</div>
+                    <div className="font-semibold text-white">{testimonial.name}</div>     
+                    <div className="text-sm text-gray-400">{testimonial.position}</div>    
+                    <div className="text-sm text-blue-400">{testimonial.company}</div>     
                   </div>
                 </div>
 
@@ -71,8 +85,8 @@ export const TestimonialsSection = () => {
 
         {/* View More */}
         <div className="text-center mt-12">
-          <a 
-            href="/testimonials" 
+          <a
+            href="/testimonials"
             className="inline-flex items-center text-blue-400 hover:text-blue-300 font-semibold transition-colors"
           >
             View All Testimonials
