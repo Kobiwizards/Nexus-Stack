@@ -6,13 +6,14 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
-    { name: 'Work', href: '/work' },
-    { name: 'About', href: '/about' },
-    { name: 'Careers', href: '/careers' }, // Added Careers page
-    { name: 'Contact', href: '/contact' },
-  ]
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: 'Work', href: '/work' },
+  { name: 'About', href: '/about' },
+  { name: 'Courses', href: '/courses' }, // Add this line
+  { name: 'Careers', href: '/careers' },
+  { name: 'Contact', href: '/contact' },
+];
 
   const openModal = (type) => {
     // Dispatch custom event to open modal
